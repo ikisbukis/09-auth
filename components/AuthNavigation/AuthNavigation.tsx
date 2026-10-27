@@ -1,0 +1,73 @@
+"use client";
+
+import Link from "next/link";
+import { useAuthStore } from "@/lib/store/authStore";
+import css from "./AuthNavigation.module.css";
+import { getMe, logout } from "@/lib/api/clientApi";
+import { useRouter } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
+
+
+const AuthNavigation = () => {
+  const router = useRouter()
+  const {isAuth, cleanUser }= useAuthStore();
+  
+  const { data: user} = useQuery({
+    queryKey:['getMe'],
+    queryFn: ()=> getMe(),
+    refetchOnMount: false
+  })
+  const handleLogout = async () => {
+    await logout()
+    cleanUser()
+    router.push('/sign-in')
+  }
+
+  return isAuth ? (
+        <>
+          <li className={css.navigationItem}>
+            <Link
+              href="/profile"
+              prefetch={false}
+              className={css.navigationLink}
+            >
+              Profile
+            </Link>
+          </li>
+
+          <li className={css.navigationItem}>
+            <p className={css.userEmail}>{user?.email}</p>
+            <button
+              type="button"
+              className={css.logoutButton}
+              onClick={handleLogout}
+            >
+              Logout
+            </button>
+          </li>
+        </>
+      ) : (
+        <>
+          <li className={css.navigationItem}>
+            <Link
+              href="/sign-in"
+              prefetch={false}
+              className={css.navigationLink}
+            >
+              Login
+            </Link>
+          </li>
+
+          <li className={css.navigationItem}>
+            <Link
+              href="/sign-up"
+              prefetch={false}
+              className={css.navigationLink}
+            >
+              Sign up
+            </Link>
+          </li>
+        </>
+      )}
+
+export default AuthNavigation;

@@ -1,0 +1,61 @@
+'use client'
+import { useRouter } from "next/navigation"
+import css from "./SignUpPage.module.css"
+import { useState } from "react"
+import { register, RegisterRequest } from "@/lib/api/clientApi"
+import { ApiError } from "@/lib/api/api"
+import { useAuthStore } from "@/lib/store/authStore"
+
+
+const Register = () => {
+    const router = useRouter()
+    const setUser = useAuthStore(state=> state.setUser)
+    const[error, setError] = useState('');
+
+    const handleForm = async (formData: FormData) => {
+        try{
+           setError("");
+            const formValues = Object.fromEntries(formData) as unknown as RegisterRequest;
+            const response = await register(formValues);
+            if(response){
+              setUser(response)
+              router.push('/profile');
+            } else {
+              setError("Inavalid email or password");
+            }
+        } catch(error) {
+          setError((error as ApiError).response?.data?.error ?? 
+          (error as ApiError).message ??
+          'Oops... some error')
+        }
+    }
+
+    return(
+        <main className={css.mainContent}>
+	<form className={css.form} action={handleForm}>
+    <h1 className={css.formTitle}>Sign up</h1>
+    <div className={css.formGroup}>
+      <label htmlFor="email">Email</label>
+      <input id="email" type="email" name="email" className={css.input} required />
+    </div>
+
+    <div className={css.formGroup}>
+      <label htmlFor="password">Password</label>
+      <input id="password" type="password" name="password" className={css.input} required />
+    </div>
+
+    <div className={css.actions}>
+      <button type="submit" className={css.submitButton}>
+        Register
+      </button>
+    </div>
+
+    <p className={css.error}>Error</p>
+  </form>
+  {error && <p>{error}</p>}
+</main>
+
+    )
+}
+
+export default Register
