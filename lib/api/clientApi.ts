@@ -70,7 +70,7 @@ export const getMe = async () => {
 }
 
 export const updateMe = async (payload: UpdateUserRequest) => {
-  const res = await nextApiServer.put<User>('/auth/me', payload);
+  const res = await nextApiServer.patch<User>('/users/me', payload);
   return res.data;
 };
 
