@@ -3,15 +3,15 @@ import { create } from "zustand";
 
 
 interface AuthStore {
-    isAuth: boolean
+    isAuthenticated: boolean
     user: User | null
     setUser: (user : User) => void
     cleanUser: ()=>void
 }
 
 export const useAuthStore = create<AuthStore>()((set) => ({
-    isAuth: false,
+    isAuthenticated: false,
     user: null,
-    setUser: (user : User) => set({isAuth:true, user}),
-    cleanUser: ()=> set({isAuth: false, user: null})
+    setUser: (user : User) => set({isAuthenticated:true, user}),
+    cleanUser: ()=> set({isAuthenticated: false, user: null})
 })) 

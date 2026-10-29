@@ -10,7 +10,7 @@ import { useQuery } from "@tanstack/react-query";
 
 const AuthNavigation = () => {
   const router = useRouter()
-  const {isAuth, cleanUser }= useAuthStore();
+  const {isAuthenticated, cleanUser }= useAuthStore();
   
   const { data: user} = useQuery({
     queryKey:['getMe'],
@@ -23,7 +23,7 @@ const AuthNavigation = () => {
     router.push('/sign-in')
   }
 
-  return isAuth ? (
+  return isAuthenticated ? (
         <>
           <li className={css.navigationItem}>
             <Link

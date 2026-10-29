@@ -2,13 +2,13 @@ import { User } from '@/types/user';
 import type { Note, CreateNoteType} from '../../types/note';
 import { nextApiServer } from './api';
 
-interface FetchNotesParams{
+export interface FetchNotesParams{
     page: number
     search?: string
     tag?: string
 }
 
-interface FetchNotesParamsHttpResponse{
+export interface FetchNotesParamsHttpResponse{
     notes: Note[]
     totalPages: number
 }
@@ -29,9 +29,6 @@ interface CheckSession{
 
 export type UpdateUserRequest = {
   username?: string
-  email?: string
-  password?: string
-  avatar?: string
 };
 
 const key = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN
@@ -80,7 +77,7 @@ export const updateMe = async (payload: UpdateUserRequest) => {
 //note routes
 export const fetchNotes = async ({page, search, tag}: FetchNotesParams) : Promise<FetchNotesParamsHttpResponse> => {
     const response = await nextApiServer.get<FetchNotesParamsHttpResponse>(`/notes`, {
-        ...options,
+        headers: options.headers,
         params: {page, ...(search ? {search} : {}), ...(tag ? {tag} : {})}
     })
     return response.data

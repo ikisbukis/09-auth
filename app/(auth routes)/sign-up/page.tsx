@@ -6,7 +6,6 @@ import { register, RegisterRequest } from "@/lib/api/clientApi"
 import { ApiError } from "@/lib/api/api"
 import { useAuthStore } from "@/lib/store/authStore"
 
-
 const Register = () => {
     const router = useRouter()
     const setUser = useAuthStore(state=> state.setUser)
@@ -49,10 +48,8 @@ const Register = () => {
         Register
       </button>
     </div>
-
-    <p className={css.error}>Error</p>
   </form>
-  {error && <p>{error}</p>}
+  {error && <p className={css.error}>Error</p>}
 </main>
 
     )

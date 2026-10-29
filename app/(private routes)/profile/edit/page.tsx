@@ -94,7 +94,7 @@ export default function EditProfilePage() {
             <button
               type="button"
               className={css.cancelButton}
-              onClick={() => router.push("/profile")}
+              onClick={() => router.back()}
             >
               Cancel
             </button>
