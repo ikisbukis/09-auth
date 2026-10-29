@@ -5,11 +5,11 @@ import Image from "next/image";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Sign-up page",
-  description: "Sign-up to unlock more features",
+  title: "Profile",
+  description: "Profile",
   openGraph: {
-    title: "Sign-up page",
-    description: "Sign-up to unlock more features",
+    title: "Profile",
+    description: "Profile",
     url: "https://notehub.com/",
     images: [
       {
