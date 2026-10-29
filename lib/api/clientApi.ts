@@ -28,7 +28,10 @@ interface CheckSession{
 }
 
 export type UpdateUserRequest = {
-  userName?: string;
+  username?: string
+  email?: string
+  password?: string
+  avatar?: string
 };
 
 const key = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN
